@@ -683,7 +683,7 @@ static int meth_set_verify_ext(lua_State *L)
 /**
  * Context metamethods.
  */
-static luaL_Reg meta[] = {
+static luaL_Reg xmeta[] = {
   {"__gc",       meth_destroy},
   {"__tostring", meth_tostring},
   {NULL, NULL}
@@ -729,7 +729,7 @@ LSEC_API int luaopen_ssl_context(lua_State *L)
   luaL_newmetatable(L, "SSL:DH:Registry");      /* Keep all DH callbacks */
   luaL_newmetatable(L, "SSL:Verify:Registry");  /* Keep all verify flags */
   luaL_newmetatable(L, "SSL:Context");
-  luaL_register(L, NULL, meta);
+  luaL_register(L, NULL, xmeta);
 
   /* Create __index metamethods for context */
   lua_newtable(L);

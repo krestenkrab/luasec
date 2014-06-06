@@ -757,7 +757,7 @@ static luaL_Reg methods[] = {
 /**
  * SSL metamethods.
  */
-static luaL_Reg meta[] = {
+static luaL_Reg xmeta[] = {
   {"__gc",       meth_destroy},
   {"__tostring", meth_tostring},
   {NULL, NULL}
@@ -799,7 +799,7 @@ LSEC_API int luaopen_ssl_core(lua_State *L)
 
   /* Register the functions and tables */
   luaL_newmetatable(L, "SSL:Connection");
-  luaL_register(L, NULL, meta);
+  luaL_register(L, NULL, xmeta);
 
   lua_newtable(L);
   luaL_register(L, NULL, methods);
