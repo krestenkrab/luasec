@@ -422,6 +422,30 @@ static int meth_serial(lua_State *L)
 }
 
 /**
+ * Return the value of "subject key identifier"
+ */
+static int meth_subject_key_identifier(lua_State *L)
+{
+    X509* cert = lsec_checkx509(L, 1);
+    int loc = X509_get_ext_by_NID(cert, NID_subject_key_identifier,-1);
+    X509_EXTENSION *ext = X509_get_ext(cert, loc);
+    if (ext) {
+        char buffer[256];
+        char * p = buffer;
+        for (int i = 0; i < ext->value->length; i++) {
+            if (i != 0) *p++ = ':';
+            
+            to_hex((const char*)ext->value->data+i, 1, p);
+            p += 2;
+        }
+        lua_pushlstring(L, buffer, p-buffer);
+        return 1;
+    }
+    
+    return 0;
+}
+
+/**
  * Return not before date.
  */
 static int meth_notbefore(lua_State *L)
@@ -508,6 +532,7 @@ static luaL_Reg methods[] = {
   {"pem",        meth_pem},
   {"pubkey",     meth_pubkey},
   {"serial",     meth_serial},
+  {"subject_key_identifier", meth_subject_key_identifier},
   {"subject",    meth_subject},
   {"validat",    meth_valid_at},
   {NULL,         NULL}
