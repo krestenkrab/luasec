@@ -432,7 +432,8 @@ static int meth_subject_key_identifier(lua_State *L)
     if (ext) {
         char buffer[256];
         char * p = buffer;
-        for (int i = 0; i < ext->value->length; i++) {
+        int i;
+        for (i = 0; i < ext->value->length; i++) {
             if (i != 0) *p++ = ':';
             
             to_hex((const char*)ext->value->data+i, 1, p);
