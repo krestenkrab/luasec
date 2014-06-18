@@ -433,16 +433,16 @@ static int meth_subject_key_identifier(lua_State *L)
         char buffer[256];
         char * p = buffer;
         int i;
-        for (i = 0; i < ext->value->length; i++) {
-            if (i != 0) *p++ = ':';
-            
+        for (i = 2; i < ext->value->length; i++) {
+            if (i != 2) *p++ = ':';
+
             to_hex((const char*)ext->value->data+i, 1, p);
             p += 2;
         }
         lua_pushlstring(L, buffer, p-buffer);
         return 1;
     }
-    
+
     return 0;
 }
 
