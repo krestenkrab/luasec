@@ -260,7 +260,9 @@ static int meth_create(lua_State *L)
   ssl->state = LSEC_STATE_NEW;
   SSL_set_fd(ssl->ssl, (int)SOCKET_INVALID);
   SSL_set_mode(ssl->ssl, SSL_MODE_ENABLE_PARTIAL_WRITE | 
-    SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER);
+    SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER |
+    SSL_MODE_SEND_CLIENTHELLO_TIME
+);
 #if defined(SSL_MODE_RELEASE_BUFFERS)
   SSL_set_mode(ssl->ssl, SSL_MODE_RELEASE_BUFFERS);
 #endif
